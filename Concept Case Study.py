@@ -3,7 +3,10 @@ class Node:
         self.data = data
         self.next = None
 
-Head_data = str(input("Enter head's data: "))
+print(f"Select which list you want to create: \n 1 - Singly\n 2 - Singly Circular\n 3 - Doubly\n 4 - Doubly Circular")
+choice = int(input(f"Enter your choice (1-4): "))
+
+Head_data = str(input("\nEnter head's data: "))
 Head = Node(Head_data)
 current = Head
 
