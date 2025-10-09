@@ -74,7 +74,7 @@ while status:
                     while Curr is not None:
                         Curr_pos += 1
                         if Curr_pos == retri_pos:
-                            print(f"{retri_pos} has a data of {Curr.data}")
+                            print(f"Position {retri_pos} has a data of {Curr.data}")
                             break
                         Curr = Curr.next
                     else:
@@ -86,4 +86,4 @@ while status:
     elif user_choice == 5:
         break
 
-print(f"    Thank you and have a nice day! ^^   ")
+print(f"\n    Thank you and have a nice day! ^^   ")
