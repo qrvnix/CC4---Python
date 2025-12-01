@@ -234,7 +234,7 @@ while status:
                     print("Successfully deleted the head of the list!\n")
                 
                 #deleting at specified position (singly)
-                if delete_choice == 2:
+                elif delete_choice == 2:
                     print(f"\n                  SINGLY LINKED LIST: Deletion-Specified Position     \n")
                     try:
                         delete_pos = int(input("Enter position of the node to be deleted: "))
@@ -268,7 +268,7 @@ while status:
                         print(f"Deleted node at position {delete_pos}!\n")
                     
                 #deleting at the end (singly)
-                if delete_choice == 3:
+                elif delete_choice == 3:
                     print(f"\n                  SINGLY LINKED LIST: Deletion-End     \n")
                     
                     # if list is empty
