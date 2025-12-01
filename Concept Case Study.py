@@ -13,7 +13,7 @@ def choose():
             else:
                 raise ValueError
         except ValueError:
-            print("Invalid input. Please try again.")        
+            print("\nInvalid input. Please try again.\n")        
 
 def choose_operation():
     while True:
@@ -25,7 +25,7 @@ def choose_operation():
             else:
                 raise ValueError
         except ValueError:
-            print("Invalid input. PLease try again.")
+            print("\nInvalid input. PLease try again.\n")
 
 def traversal(head):
     if head is None:
@@ -48,19 +48,19 @@ def for_retrieval():
             else:
                 raise ValueError
         except ValueError:
-            print("Invalid input. PLease try again.")
+            print("\nInvalid input. PLease try again.\n")
 
 def insertion():
     while True:
         try:
             print(f"Select where to insert a node:\n 1 - Beginning\n 2 - Middle (Before a node)\n 3 - Middle (After a node)\n 4 - End")
             choice = int(input(f"Enter your choice (1-4): "))
-            if choice in range(1, 3):
+            if choice in range(1, 5):
                 return choice
             else:
                 raise ValueError
         except ValueError:
-            print("Invalid input. PLease try again.")
+            print("\nInvalid input. PLease try again.\n")
 
 #Main Code
 status = True
@@ -162,6 +162,7 @@ while status:
                     if Head.data == target_value:
                         newnode.next = Head
                         Head = newnode
+
                     else:
                         prev = None
                         curr = Head 
@@ -173,6 +174,39 @@ while status:
                         else:
                             prev.next = newnode
                             newnode.next = curr
+                
+                #inserting at the middle-after a node (singly)
+                elif insert_choice == 3:
+                    print(f"\n                  SINGLY LINKED LIST: Insertion-Middle (After)     \n")
+                    target_value = input("Enter data of the node AFTER which to insert: ")
+                    newnode_value = str(input("Enter data of new node: "))
+                    newnode = Node(newnode_value)
+
+                    #traverse to find the target
+                    curr = Head
+                    while curr is not None:
+                        if curr.data == target_value:
+                            break
+                        else:
+                            curr = curr.next
+                    
+                    #adjust pointers
+                    newnode.next = curr.next
+                    curr.next = newnode
+                
+                #inserting at the end (singly)
+                elif insert_choice == 4:
+                    print(f"\n                  SINGLY LINKED LIST: Insertion-End     \n")
+                    newnode_value = str(input("Enter data of new node: "))
+                    newnode = Node(newnode_value)
+
+                    #traverse to find tail
+                    curr = Head
+                    while curr.next is not None:
+                        curr = curr.next
+
+                    #adjust pointers
+                    curr.next = newnode
 
             #returns user to Main Menu
             elif user_operation == 5:
