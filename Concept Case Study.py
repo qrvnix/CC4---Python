@@ -62,6 +62,18 @@ def insertion():
         except ValueError:
             print("\nInvalid input. PLease try again.\n")
 
+def deletion():
+    while True:
+        try:
+            print(f"Select where to delete a node:\n 1 - Beginning\n 2 - Specific Position\n 3 - End")
+            choice = int(input(f"Enter your choice (1-3): "))
+            if choice in range(1, 4):
+                return choice
+            else:
+                raise ValueError
+        except ValueError:
+            print("\nInvalid input. PLease try again.\n")
+
 #Main Code
 status = True
 while status:
@@ -207,6 +219,65 @@ while status:
 
                     #adjust pointers
                     curr.next = newnode
+
+            #deletion operation (singly)
+            elif user_operation == 4:
+                print(f"\n                  SINGLY LINKED LIST: Deletion                  \n")
+                delete_choice = deletion()
+
+                #deleting at the beginning (singly)
+                if delete_choice == 1:
+                    print(f"\n                  SINGLY LINKED LIST: Deletion-Beginning     \n")
+                    temp_var = Head     #save to temporary variable
+                    Head = Head.next    #adjust pointers
+                    temp_var = None     #delete temporary variable
+                    print("Successfully deleted the head of the list!\n")
+                
+                #deleting at specified position (singly)
+                if delete_choice == 2:
+                    print(f"\n                  SINGLY LINKED LIST: Deletion-Specified Position     \n")
+                    try:
+                        delete_pos = int(input("Enter position of the node to be deleted: "))
+                    except ValueError:
+                        print("\nInvalid input. Please try again.\n")
+
+                    curr = Head
+                    temp_var = Head
+                    prev = None
+                    count_pos = 1
+
+                    #if user want to delete 1st position/head
+                    if delete_pos == 1:
+                        Head = curr. next
+                    else:
+                        while count_pos < delete_pos:       #traverse to reach node before the position
+                            prev = temp_var
+                            temp_var = temp_var.next
+                            count_pos += 1                  #increment by 1
+                        prev.next = temp_var.next
+                        print(f"Successfully deleted the node {delete_pos}!\n")
+                    
+                #deleting at the end (singly)
+                if delete_choice == 3:
+                    print(f"\n                  SINGLY LINKED LIST: Deletion-End     \n")
+                    
+                    # if list is empty
+                    if Head is None:
+                        print("List is empty!\n")
+                    
+                    # if list has only 1 node
+                    elif Head.next is None:
+                        Head = None
+                        print("Deleted the only node in the list!\n")
+
+                    else:
+                        #traverse
+                        curr = Head
+                        while curr.next.next is not None:
+                            curr = curr.next
+
+                        curr.next = None
+                        print(f"Successfully deleted the tail node!\n")
 
             #returns user to Main Menu
             elif user_operation == 5:
