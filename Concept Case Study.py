@@ -3,11 +3,6 @@ class Node:
         self.data = data
         self.next = None
 
-class SinglyCircular_Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-        
 def choose():
     while True:
         try:
@@ -91,7 +86,7 @@ def insertion_circular():
     while True:
         try:
             print(f"Select where to insert a node:\n 1 - Beginning\n 2 - Specific Position\n 3 - End")
-            choice = int(input(f"Enter your choice (1-4): "))
+            choice = int(input(f"Enter your choice (1-3): "))
             if choice in range(1, 4):
                 return choice
             else:
@@ -435,6 +430,108 @@ while status:
 
             elif user_operation == 3:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion                  \n")
+                insert_choice = insertion_circular()
+
+                #insertion at the beginning (singly-circular)
+                if insert_choice == 1:
+                    print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion-Beginning                  \n")
+                    newnode_value = str(input("Enter data of new node: "))
+                    newnode = Node(newnode_value)
+
+                    #empty list
+                    if Head is None:
+                        Head = newnode
+                        newnode.next = Head     # Points to itself
+
+                    else:
+                        last = Head             # Find last node
+                        while last.next != Head:
+                            last = last.next
+
+                        newnode.next = Head     # Point new node to current head
+                        last.next = newnode     # Make last node point to new head
+                        Head = newnode          # Update head
+
+                    print("Node inserted at the beginning! :)")
+                
+                #insertion at specified position (singly-circular)
+                elif insert_choice == 2:
+                    print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion-Specified Position                  \n")
+                    newnode_value = str(input("Enter data of new node: "))
+                    newnode = Node(newnode_value)
+
+                    while True:
+                        try:
+                            insert_pos = int(input("Enter position to insert a node: "))
+                            if insert_pos < 1:
+                                raise ValueError
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n") 
+                    
+                    if insert_pos == 1:     #same as insertion at the beginning
+                        if Head is None:
+                            Head = newnode
+                            newnode.next = Head     # Points to itself
+
+                        else:
+                            last = Head             # Find last node
+                            while last.next != Head:
+                                last = last.next
+
+                            newnode.next = Head     # Point new node to current head
+                            last.next = newnode     # Make last node point to new head
+                            Head = newnode          # Update head
+                            
+                        print("Node inserted at position 1! :)")
+
+                    if insert_pos > 1:    # insertion at positions other than 1
+                        if Head is None:
+                            print("The list is empty.")
+
+                        else:
+                            curr = Head
+                            prev = None
+                            curr_pos = 1        #Head's position is 1
+
+                            while True:
+                                #Stop traversing before the position
+                                if curr_pos == insert_pos:
+                                    break
+
+                                prev = curr
+                                curr = curr.next
+                                curr_pos += 1
+
+                                #looped back to head → position doesn't exist
+                                if curr == Head:
+                                    print(f"{retri_pos} is out of range.")
+                                    break
+
+                            prev.next = newnode     #node prior to the position
+                            newnode.next = curr     #point new node to the node on target position
+                            
+                            print(f"Node inserted at position {insert_pos}!")
+
+                elif insert_choice == 3:
+                    print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion-End                  \n")
+                    newnode_value = str(input("Enter data of new node: "))
+                    newnode = Node(newnode_value)
+
+                    #empty list
+                    if Head is None:
+                        Head = newnode
+                        newnode.next = Head     # Points to itself
+
+                    else:
+                        last = Head             # Find last node
+                        while last.next != Head:
+                            last = last.next
+      
+                        last.next = newnode     # Make last node point to new head
+                        newnode.next = Head
+
+                        print("Node inserted at the end! :)")
 
             elif user_operation == 4:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Deletion                  \n")
