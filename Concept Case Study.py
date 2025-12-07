@@ -3,6 +3,11 @@ class Node:
         self.data = data
         self.next = None
 
+class SinglyCircular_Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        
 def choose():
     while True:
         try:
@@ -18,9 +23,9 @@ def choose():
 def choose_operation():
     while True:
         try:
-            print(f"\nSelect what operation to do: \n 1 - Traversal (Print all your data)\n 2 - Retrieval\n 3 - Insertion\n 4 - Deletion\n 5 - Back to main menu")
+            print(f"\nSelect what operation to do: \n 1 - Traversal (Print all your data)\n 2 - Retrieval\n 3 - Insertion\n 4 - Deletion\n 5 - Length\n 6 - Back to main menu")
             choice = int(input(f"Enter your choice (1-5): "))
-            if choice in range(1, 6):
+            if choice in range(1, 7):
                 return choice
             else:
                 raise ValueError
@@ -31,12 +36,32 @@ def traversal(head):
     if head is None:
         print("Your list is empty.")
         return
+    
     curr = head
     print("Linked List:", end=" ")
+
     while curr:
         print(curr.data, end=" -> " if curr.next else "")
         curr = curr.next
     print("\n")
+
+def traversal_SinglyCircular(head):
+    if head is None:
+        print("Your list is empty.")
+        return
+
+    curr = head
+    print("Linked List:", end=" ")
+
+    while True:
+        print(curr.data, end=" -> ")
+        curr = curr.next
+
+        # Stopping point
+        if curr == head:
+            break
+    
+    print("(back to head)\n")
 
 def for_retrieval():
     while True:
@@ -289,8 +314,69 @@ while status:
                         curr.next = None
                         print(f"Successfully deleted the tail node!\n")
 
-            #returns user to Main Menu
+            #count the length of the list
             elif user_operation == 5:
+                print(f"\n                  SINGLY LINKED LIST: Length                  \n")
+                
+                curr = Head
+                count = 0
+
+                while curr is not None:
+                    count += 1
+                    curr = curr.next
+                print(f"Length: {count}")
+
+            #returns user to Main Menu
+            elif user_operation == 6:
+                break
+
+    elif user_choice == 2:
+        print(f"\n                  SINGLY-CIRCULAR LINKED LIST                  \n")
+        print(f"_______________Let's create your list first!______________")
+
+        #determine the size
+        list_size = int(input("Enter list length: "))
+
+        #create the circular list
+        Head_data = str(input("\nEnter head's data: "))
+        Head = Node(Head_data)
+        current = Head
+
+        nodeCount = 1
+        while nodeCount < list_size:
+            next_data = str(input("Enter next data: "))
+            new_node = Node(next_data)
+            current.next = new_node
+            current = new_node
+            nodeCount += 1
+        
+        current.next = Head
+
+        #print the created list
+        print("\n-----Current List:-----\n")
+        traversal_SinglyCircular(Head)
+        print("\n-----------------------")
+
+        #Menu of operations under singly-circular
+        while True:
+            user_operation = choose_operation()
+            if user_operation == 1:
+                print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Traversal                  \n")
+                traversal_SinglyCircular(Head)
+            
+            elif user_operation == 2:
+                print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Retrieval                  \n")
+
+            elif user_operation == 3:
+                print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion                  \n")
+
+            elif user_operation == 4:
+                print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Deletion                  \n")
+
+            elif user_operation == 5:
+                print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Length                  \n")
+
+            elif user_operation == 6:
                 break
 
     elif user_choice == 5:
