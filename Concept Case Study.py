@@ -656,6 +656,20 @@ while status:
             elif user_operation == 5:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Length                  \n")
 
+                # Empty list
+                if Head is None:
+                    print("The list is empty. There is nothing to delete.\n")
+
+                else:
+                    count = 1
+                    curr = Head
+
+                    while curr.next != Head:        # Traverse until the current node points to the head
+                        count += 1
+                        curr = curr.next
+                    
+                    print(f"Length: {count}.\n")
+
             elif user_operation == 6:
                 break
 
