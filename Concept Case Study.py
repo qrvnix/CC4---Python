@@ -87,6 +87,18 @@ def insertion():
         except ValueError:
             print("\nInvalid input. PLease try again.\n")
 
+def insertion_circular():
+    while True:
+        try:
+            print(f"Select where to insert a node:\n 1 - Beginning\n 2 - Specific Position\n 3 - End")
+            choice = int(input(f"Enter your choice (1-4): "))
+            if choice in range(1, 4):
+                return choice
+            else:
+                raise ValueError
+        except ValueError:
+            print("\nInvalid input. PLease try again.\n")
+
 def deletion():
     while True:
         try:
@@ -366,6 +378,60 @@ while status:
             
             elif user_operation == 2:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Retrieval                  \n")
+                retri_choice = for_retrieval()
+                if retri_choice == 1:       #checking if a value exists
+                    user_value = str(input("\nEnter value to check: "))
+                    found = False
+                    curr = Head
+
+                    if curr is None:
+                        print("The list is empty.")
+                    else:
+                        while True:
+                            if curr.data == user_value:
+                                print(f"{user_value} exists in the linked list!")
+                                found = True
+                                break
+
+                            curr = curr.next
+
+                            # stop when we return to head
+                            if curr == Head:
+                                break
+
+                        if not found:
+                            print(f"{user_value} doesn't exist in the linked list. :(")
+                
+                elif retri_choice == 2:
+                    while True:
+                        try:
+                            retri_pos = int(input("\nEnter position to retrieve: "))
+                            if retri_pos <= 0:
+                                raise ValueError
+                                continue
+                            break
+                        except ValueError:
+                            print("Invalid input. Please try again.")
+
+                    curr = Head
+                    curr_pos = 1        #Head's position is 1
+
+                    if curr is None:
+                        print("The list is empty.")
+                    else:
+                        while True:
+                            # If we've reached the position:
+                            if curr_pos == retri_pos:
+                                print(f"Position {retri_pos} has a data of {curr.data}")
+                                break
+
+                            curr = curr.next
+                            curr_pos += 1
+
+                            # We've looped back to head → position doesn't exist
+                            if curr == Head:
+                                print(f"{retri_pos} is out of range.")
+                                break
 
             elif user_operation == 3:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion                  \n")
