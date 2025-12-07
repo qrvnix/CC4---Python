@@ -535,6 +535,123 @@ while status:
 
             elif user_operation == 4:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Deletion                  \n")
+                delete_choice = deletion()
+
+                #deleting at the beginning (singly)
+                if delete_choice == 1:
+                    print(f"\n                  SINGLY-Circular LINKED LIST: Deletion-Beginning     \n")
+                    
+                    #empty list
+                    if Head is None:
+                        print("The list is empty. There is nothing to delete.\n")
+                    
+                    #One node only
+                    elif Head.next == Head:     #Head pointing to it self (circular)
+                        Head = None
+                        print("Successfully deleted the head of the list!\n")
+                    
+                    #More than one node
+                    else:
+                        temp_var = None
+                        last = Head
+                        while last.next != Head:
+                            temp_var = last
+                            last = last.next
+
+                        last.next = Head.next       # Tail points to the node next to head
+                        Head = Head.next            # Adjust the head
+                        temp_var = None             # Dispose temporary variable
+                        print("Successfully deleted the head of the list!\n")
+                
+                elif delete_choice == 2:
+                    print(f"\n                  SINGLY-Circular LINKED LIST: Deletion-Specified Position     \n")
+                    while True:    
+                        try:
+                            delete_pos = int(input("Enter position of the node to be deleted: "))
+                            if delete_pos <= 0:
+                                raise ValueError
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+                    
+                    if Head is None:
+                        print("The list is empty. There is nothing to delete.\n")
+                    
+                    else:
+                        if delete_pos == 1:      # Same as deleting the front node
+                            temp_var = Head
+                            if Head.next == Head:
+                                Head = None
+
+                            else:
+                                last = Head
+                                while last.next != Head:
+                                    temp_var = last
+                                    last = last.next
+
+                                last.next = Head.next       # Tail points to the node next to head
+                                Head = Head.next            # Adjust the head
+                            
+                            temp_var = None             # Dispose temporary variable
+                            print("Successfully deleted position 1!\n")
+                    
+                        else:
+                            curr = Head         # Current node during traversal
+                            prev = None         # Node before the current node
+                            temp_var = None
+                            curr_pos = 1
+
+                            while True:
+                                #Stop traversing before the position
+                                if curr_pos == delete_pos:
+                                    break
+
+                                prev = curr
+                                temp_var = curr
+                                curr = curr.next
+                                curr_pos += 1
+
+                                #looped back to head → position doesn't exist
+                                if curr == Head:
+                                    curr = None
+                                    break
+                            
+                            if curr is None:
+                                print(f"{delete_pos} is out of range.")
+                            else:
+                                temp_var = curr
+                                prev.next = curr.next       # Adjust the previous node's pointer
+                                temp_var = None         # Dispose temporary variable
+                                print(f"Successfully deleted position {delete_pos}!\n")
+                
+                elif delete_choice == 3:
+                    print(f"\n                  SINGLY-Circular LINKED LIST: Deletion-End     \n")
+                    
+                    #empty list
+                    if Head is None:
+                        print("The list is empty. There is nothing to delete.\n")
+
+                    #One node only
+                    elif Head.next == Head:     # Head pointing to it self (circular)
+                        temp_var = Head         # Save the node to be deleted
+                        Head = None
+                        temp_var = None         # Dispose
+                        print("Successfully deleted the head of the list!\n") 
+
+                    #More than one node
+                    else:
+                        prev = None
+                        last = Head
+
+                        # Traverse to find the tail
+                        while last.next != Head:
+                            prev = last
+                            last = last.next
+
+                        temp_var = last         # Save in temporary variable
+                        prev.next = Head        # Previous node points to head
+                        temp_var = None         # Dispose
+                        print("Successfully deleted the tail of the list!\n")  
 
             elif user_operation == 5:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Length                  \n")
