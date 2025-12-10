@@ -114,6 +114,18 @@ def insertion_circular():
         except ValueError:
             print("\nInvalid input. PLease try again.\n")
 
+def insertion_doubly():
+    while True:
+        try:
+            print(f"Select where to insert a node:\n 1 - Beginning\n 2 - Specific Position\n 3 - End")
+            choice = int(input(f"Enter your choice (1-3): "))
+            if choice in range(1, 4):
+                return choice
+            else:
+                raise ValueError
+        except ValueError:
+            print("\nInvalid input. PLease try again.\n")
+
 def deletion():
     while True:
         try:
@@ -723,11 +735,11 @@ while status:
                 user_operation = choose_operation()
                 #traversal operation (singly)
                 if user_operation == 1:
-                    print(f"\n                  SINGLY LINKED LIST: Traversal                  \n")
+                    print(f"\n                  DOUBLY LINKED LIST: Traversal                  \n")
                     traversal_Doubly(Head)
                 
                 elif user_operation == 2:
-                    print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Retrieval                  \n")
+                    print(f"\n                  DOUBLY LINKED LIST: Retrieval                  \n")
                     retri_choice = for_retrieval()
                     
                      #checks if a particular value exists
@@ -766,6 +778,67 @@ while status:
                             curr = curr.next
                         else:
                             print(f"{retri_pos} is out of range.")
+
+                elif user_operation == 3:
+                    print(f"\n                  DOUBLY LINKED LIST: Insertion                  \n")
+
+                    insert_choice = insertion_doubly()
+
+                    #inserting at beginning (singly)
+                    if insert_choice == 1:
+                        print(f"\n                  DOUBLY LINKED LIST: Insertion-Beginning      \n")
+                        newnode_value = str(input("Enter data of new node: "))
+                        newnode = Doubly_Node(newnode_value)
+
+                        if Head is not None:        # This makes sure that the previous pointer is only set if list is not empty
+                            Head.prev = newnode
+
+                        newnode.next = Head
+                        Head = newnode
+                    
+                    elif insert_choice == 2:
+                        print(f"\n                  DOUBLY LINKED LIST: Insertion-Specific Position      \n")
+                        newnode_value = str(input("Enter data of new node: "))
+                        newnode = Doubly_Node(newnode_value)
+
+                        while True:
+                            try:
+                                insert_pos = int(input("Enter position to insert a node: "))
+                                if insert_pos < 1:
+                                    raise ValueError
+                                break
+                            except ValueError:
+                                print("\nInvalid input. Please try again.\n") 
+                        
+                        if insert_pos == 1:     # Insertion at the beginning
+                            if Head is not None:
+                                Head.prev = newnode
+                            newnode.next = Head     # Points to itself
+                            newnode.prev = None
+                            Head = newnode
+                            print("Node inserted at position 1!")
+                        
+                        else:                   # Insert at positions > 1
+                            if Head is None:    #checks if list is empty
+                                print("The list is empty.")
+                            else:
+                                curr = Head
+                                curr_pos = 1
+
+                                # Traverse to the node currently at insert_pos
+                                while curr is not None and curr_pos < insert_pos:
+                                    prev = curr
+                                    curr = curr.next
+                                    curr_pos += 1
+
+                                # Insert newnode between prev and curr
+                                newnode.prev = prev
+                                newnode.next = curr
+                                prev.next = newnode
+                                if curr is not None:
+                                    curr.prev = newnode
+
+                                print(f"Node inserted at position {insert_pos}!")
 
     elif user_choice == 4:
         print(f"\n                  DOUBLY-CIRCULAR LINKED LIST                  \n")
