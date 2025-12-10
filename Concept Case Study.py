@@ -3,6 +3,12 @@ class Node:
         self.data = data
         self.next = None
 
+class Doubly_Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+
 def choose():
     while True:
         try:
@@ -19,7 +25,7 @@ def choose_operation():
     while True:
         try:
             print(f"\nSelect what operation to do: \n 1 - Traversal (Print all your data)\n 2 - Retrieval\n 3 - Insertion\n 4 - Deletion\n 5 - Length\n 6 - Back to main menu")
-            choice = int(input(f"Enter your choice (1-5): "))
+            choice = int(input(f"Enter your choice (1-6): "))
             if choice in range(1, 7):
                 return choice
             else:
@@ -57,6 +63,20 @@ def traversal_SinglyCircular(head):
             break
     
     print("(back to head)\n")
+
+def traversal_Doubly(head):
+    if head is None:
+        print("Your list is empty.")
+        return
+    
+    curr = head
+    print("Linked List:", end=" ")
+
+    while curr:
+        print(curr.data, end=" <-> " if curr.next else "")
+        curr = curr.next
+
+    print("\n")
 
 def for_retrieval():
     while True:
@@ -672,6 +692,84 @@ while status:
 
             elif user_operation == 6:
                 break
+
+    elif user_choice == 3:
+        print(f"\n                  DOUBLY LINKED LIST                  \n")
+        print(f"_______________Let's create your list first!______________")
+
+        list_size = int(input("Enter list length: "))
+
+        #creates the head
+        Head_data = str(input("\nEnter head's data: "))
+        Head = Doubly_Node(Head_data)
+        current = Head
+
+        nodeCount = 1
+        while nodeCount < list_size:
+            next_data = str(input("Enter next data: "))
+            new_node = Doubly_Node(next_data)
+            current.next = new_node
+            new_node.prev = current
+            current = new_node
+            nodeCount += 1
+
+        #print the created list
+        print("\n-----Current List:-----\n")
+        traversal_Doubly(Head)
+        print("\n-----------------------")
+
+        while True:
+            while True:
+                user_operation = choose_operation()
+                #traversal operation (singly)
+                if user_operation == 1:
+                    print(f"\n                  SINGLY LINKED LIST: Traversal                  \n")
+                    traversal_Doubly(Head)
+                
+                elif user_operation == 2:
+                    print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Retrieval                  \n")
+                    retri_choice = for_retrieval()
+                    
+                     #checks if a particular value exists
+                    if retri_choice == 1:
+                        user_value = str(input("\nEnter value to check: "))
+                        found = False
+                        curr = Head
+                        while curr is not None:
+                            if curr.data == user_value:
+                                print(f"{user_value} exists in the linked list!")
+                                found = True
+                                break
+                            curr = curr.next
+                        if not found:
+                            print(f"{user_value} doesn't exist in the linked list. :(")
+
+                    #retrieve the position of particular value
+                    elif retri_choice == 2:
+                        while True:
+                            try:
+                                retri_pos = int(input("\nEnter position to retrieve: "))
+                                if retri_pos <= 0:
+                                    raise ValueError
+                                    continue
+                                break
+                            except ValueError:
+                                print("Invalid input. Please try again.")
+
+                        curr_pos = 0
+                        curr = Head
+                        while curr is not None:
+                            curr_pos += 1
+                            if curr_pos == retri_pos:
+                                print(f"Position {retri_pos} has a data of {curr.data}")
+                                break
+                            curr = curr.next
+                        else:
+                            print(f"{retri_pos} is out of range.")
+
+    elif user_choice == 4:
+        print(f"\n                  DOUBLY-CIRCULAR LINKED LIST                  \n")
+        print(f"_______________Let's create your list first!______________")
 
     elif user_choice == 5:
         break
