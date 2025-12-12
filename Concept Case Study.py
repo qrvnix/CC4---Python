@@ -158,6 +158,26 @@ def deletion():
         except ValueError:
             print("\nInvalid input. PLease try again.\n")
 
+def selection_sort_singly(head):
+    if head is None:
+        return head
+
+    current_node = head     # Node being sorted
+
+    while current_node is not None:
+        min_node = current_node             # Node with the smallest value found in the current pass
+        search_node = current_node.next     # Node used to find the minimum value ahead
+
+        while search_node is not None:
+            if search_node.data < min_node.data:
+                min_node = search_node
+            search_node = search_node.next
+
+        # Swap data
+        current_node.data, min_node.data = min_node.data, current_node.data
+        current_node = current_node.next
+
+    return head
 #Main Code
 while True:
     user_choice = choose()
@@ -384,8 +404,17 @@ while True:
                     curr = curr.next
                 print(f"Length: {count}")
 
-            #returns user to Main Menu
+            # Performs selection sort
             elif user_operation == 6:
+                Head = selection_sort_singly(Head)
+                print(f"\n                  SINGLY LINKED LIST: Sort                  \n")
+                print(f"Successfully sorted the lis: LOWEST to HIGHEST")
+                print("\n-----Current List:-----\n")
+                traversal(Head)
+                print("\n-----------------------")
+            
+            # Returns user to Main Menu
+            elif user_operation == 7:
                 break
 
     elif user_choice == 2:
