@@ -158,26 +158,120 @@ def deletion():
         except ValueError:
             print("\nInvalid input. PLease try again.\n")
 
-def selection_sort_singly(head):
+def sorting_operation():
+    while True:
+        try:
+            print(f"Select how to sort: \n 1 - Lowest to highest\n 2 - Highest to lowest")
+            choice = int(input(f"Enter your choice (1-2): "))
+            if choice in range(1, 3):
+                return choice
+            else:
+                raise ValueError
+        except ValueError:
+            print("\nInvalid input. PLease try again.\n")
+
+def selection_sort_S(head, ascending = True):
     if head is None:
         return head
 
     current_node = head     # Node being sorted
 
     while current_node is not None:
-        min_node = current_node             # Node with the smallest value found in the current pass
+        selected_node = current_node             # Node with the smallest value found in the current pass
         search_node = current_node.next     # Node used to find the minimum value ahead
 
         while search_node is not None:
-            if search_node.data < min_node.data:
-                min_node = search_node
+            if ascending:
+                if search_node.data < selected_node.data:
+                    selected_node = search_node
+            else:
+                if search_node.data > selected_node.data:
+                    selected_node = search_node
             search_node = search_node.next
 
         # Swap data
-        current_node.data, min_node.data = min_node.data, current_node.data
+        current_node.data, selected_node.data = selected_node.data, current_node.data
         current_node = current_node.next
 
     return head
+
+def selection_sort_SC(head, ascending = True):
+    if head is None or head.next == head:
+        return head
+
+    current_node = head
+    while True:
+        selected_node = current_node
+        search_node = current_node.next
+
+        while search_node != head:
+            if ascending:
+                if search_node.data < selected_node.data:
+                    selected_node = search_node
+            else:
+                if search_node.data > selected_node.data:
+                    selected_node = search_node
+            search_node = search_node.next
+
+        # Swap data
+        current_node.data, selected_node.data = selected_node.data, current_node.data
+        current_node = current_node.next
+
+        if current_node == head:
+            break
+
+    return head
+
+def selection_sort_D(head, ascending = True):
+    if head is None:
+        return head
+
+    current_node = head
+    while current_node is not None:
+        selected_node = current_node
+        search_node = current_node.next
+
+        while search_node is not None:
+            if ascending:
+                if search_node.data < selected_node.data:
+                    selected_node = search_node
+            else:
+                if search_node.data > selected_node.data:
+                    selected_node = search_node
+            search_node = search_node.next
+
+        # Swap data
+        current_node.data, selected_node.data = selected_node.data, current_node.data
+        current_node = current_node.next
+
+    return head
+
+def selection_sort_DC(head, ascending = True):
+    if head is None or head.next == head:
+        return head
+
+    current_node = head
+    while True:
+        selected_node = current_node
+        search_node = current_node.next
+
+        while search_node != head:
+            if ascending:
+                if search_node.data < selected_node.data:
+                    selected_node = search_node
+            else:
+                if search_node.data > selected_node.data:
+                    selected_node = search_node
+            search_node = search_node.next
+
+        current_node.data, selected_node.data = selected_node.data, current_node.data
+        current_node = current_node.next
+
+        if current_node == head:
+            break
+
+    return head
+
 #Main Code
 while True:
     user_choice = choose()
@@ -406,13 +500,25 @@ while True:
 
             # Performs selection sort
             elif user_operation == 6:
-                Head = selection_sort_singly(Head)
                 print(f"\n                  SINGLY LINKED LIST: Sort                  \n")
-                print(f"Successfully sorted the lis: LOWEST to HIGHEST")
-                print("\n-----Current List:-----\n")
-                traversal(Head)
-                print("\n-----------------------")
-            
+                sort_choice = sorting_operation()
+
+                if sort_choice == 1:
+                    print(f"\n                  SINGLY LINKED LIST: Sort (Lowest - Highest)                  \n")
+                    Head = selection_sort_S(Head, ascending = True)
+                    print(f"Successfully sorted the list: LOWEST to HIGHEST")
+                    print("\n-----Current List:-----\n")
+                    traversal(Head)
+                    print("\n-----------------------")
+                
+                elif sort_choice == 2:
+                    print(f"\n                  SINGLY LINKED LIST: Sort (Highest - Lowest)                  \n")
+                    Head = selection_sort_S(Head, ascending = False)
+                    print(f"Successfully sorted the list: LOWEST to HIGHEST")
+                    print("\n-----Current List:-----\n")
+                    traversal(Head)
+                    print("\n-----------------------")
+
             # Returns user to Main Menu
             elif user_operation == 7:
                 break
