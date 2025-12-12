@@ -314,14 +314,17 @@ while True:
                 #checks if a particular value exists
                 if retri_choice == 1:
                     user_value = int(input("\nEnter value to check: "))
+                    
                     found = False
                     curr = Head
+                    
                     while curr is not None:
                         if curr.data == user_value:
                             print(f"{user_value} exists in the linked list!")
                             found = True
                             break
                         curr = curr.next
+                    
                     if not found:
                         print(f"{user_value} doesn't exist in the linked list. :(")
 
@@ -332,13 +335,14 @@ while True:
                             retri_pos = int(input("\nEnter position to retrieve: "))
                             if retri_pos <= 0:
                                 raise ValueError
-                                continue
                             break
+                        
                         except ValueError:
                             print("Invalid input. Please try again.")
 
                     curr_pos = 0
                     curr = Head
+                    
                     while curr is not None:
                         curr_pos += 1
                         if curr_pos == retri_pos:
@@ -425,46 +429,61 @@ while True:
                 #deleting at the beginning (singly)
                 if delete_choice == 1:
                     print(f"\n                  SINGLY LINKED LIST: Deletion-Beginning     \n")
-                    temp_var = Head     #save to temporary variable
-                    Head = Head.next    #adjust pointers
-                    temp_var = None     #delete temporary variable
-                    print("Successfully deleted the head of the list!\n")
+                    
+                    if Head is None:        # Empty list
+                        print("List is empty!\n")
+                        continue
+                    
+                    elif Head.next is None:  # only one node
+                        Head = None
+
+                    else:
+                        temp_var = Head     # save to temporary variable
+                        Head = Head.next    # adjust pointers
+                        temp_var = None     # delete temporary variable
+                        
+                        print("Successfully deleted the head of the list!\n")
                 
                 #deleting at specified position (singly)
                 elif delete_choice == 2:
                     print(f"\n                  SINGLY LINKED LIST: Deletion-Specified Position     \n")
-                    try:
-                        delete_pos = int(input("Enter position of the node to be deleted: "))
-                    except ValueError:
-                        print("\nInvalid input. Please try again.\n")
+                    
+                    while True:
+                        try:
+                            delete_pos = int(input("Enter position of the node to be deleted: "))
+                            if delete_pos <= 0:
+                                raise ValueError
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
 
-                    #if list is empty
+                    # If list is empty
                     if Head is None:
                         print("List is empty!\n")
-                        continue
 
-                    #if user want to delete 1st position/head
-                    if delete_pos == 1:
+                    # If user want to delete 1st position/head
+                    elif delete_pos == 1:
                         Head = Head.next
                         print("Deleted position 1 successfully!\n")
-                        continue
                     
-                    prev = None
-                    curr = Head
-                    count_pos = 1
-
-                    while curr is not None and count_pos < delete_pos:
-                        prev = curr
-                        curr = curr.next
-                        count_pos += 1
-
-                    if curr is None:
-                        print("Position out of range.\n")
                     else:
-                        prev.next = curr.next
-                        print(f"Deleted node at position {delete_pos}!\n")
+                        prev = None
+                        curr = Head
+                        count_pos = 1
+
+                        while curr is not None and count_pos < delete_pos:
+                            prev = curr
+                            curr = curr.next
+                            count_pos += 1
+
+                        if curr is None:
+                            print("Position out of range.\n")
+                        
+                        else:
+                            prev.next = curr.next
+                            print(f"Deleted node at position {delete_pos}!\n")
                     
-                #deleting at the end (singly)
+                # Deleting at the end (singly)
                 elif delete_choice == 3:
                     print(f"\n                  SINGLY LINKED LIST: Deletion-End     \n")
                     
@@ -478,7 +497,7 @@ while True:
                         print("Deleted the only node in the list!\n")
 
                     else:
-                        #traverse
+                        # Traverse
                         curr = Head
                         while curr.next.next is not None:
                             curr = curr.next
@@ -486,7 +505,7 @@ while True:
                         curr.next = None
                         print(f"Successfully deleted the tail node!\n")
 
-            #count the length of the list
+            # Count the length of the list
             elif user_operation == 5:
                 print(f"\n                  SINGLY LINKED LIST: Length                  \n")
                 
@@ -496,6 +515,7 @@ while True:
                 while curr is not None:
                     count += 1
                     curr = curr.next
+                
                 print(f"Length: {count}")
 
             # Performs selection sort
@@ -507,6 +527,7 @@ while True:
                     print(f"\n                  SINGLY LINKED LIST: Sort (Lowest - Highest)                  \n")
                     Head = selection_sort_S(Head, ascending = True)
                     print(f"Successfully sorted the list: LOWEST to HIGHEST")
+                    
                     print("\n-----Current List:-----\n")
                     traversal(Head)
                     print("\n-----------------------")
@@ -515,6 +536,7 @@ while True:
                     print(f"\n                  SINGLY LINKED LIST: Sort (Highest - Lowest)                  \n")
                     Head = selection_sort_S(Head, ascending = False)
                     print(f"Successfully sorted the list: LOWEST to HIGHEST")
+                    
                     print("\n-----Current List:-----\n")
                     traversal(Head)
                     print("\n-----------------------")
@@ -527,10 +549,10 @@ while True:
         print(f"\n                  SINGLY-CIRCULAR LINKED LIST                  \n")
         print(f"_______________Let's create your list first!______________")
 
-        #determine the size
+        # Determine the size
         list_size = int(input("Enter list length: "))
 
-        #create the circular list
+        # Create the circular list
         Head_data = int(input("\nEnter head's data: "))
         Head = Node(Head_data)
         current = Head
@@ -545,14 +567,15 @@ while True:
         
         current.next = Head
 
-        #print the created list
+        # Print the created list
         print("\n-----Current List:-----\n")
         traversal_SinglyCircular(Head)
         print("\n-----------------------")
 
-        #Menu of operations under singly-circular
+        # Menu of operations under singly-circular
         while True:
             user_operation = choose_operation()
+            
             if user_operation == 1:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Traversal                  \n")
                 traversal_SinglyCircular(Head)
@@ -567,6 +590,7 @@ while True:
 
                     if curr is None:
                         print("The list is empty.")
+                    
                     else:
                         while True:
                             if curr.data == user_value:
@@ -589,8 +613,8 @@ while True:
                             retri_pos = int(input("\nEnter position to retrieve: "))
                             if retri_pos <= 0:
                                 raise ValueError
-                                continue
                             break
+                        
                         except ValueError:
                             print("Invalid input. Please try again.")
 
@@ -599,6 +623,7 @@ while True:
 
                     if curr is None:
                         print("The list is empty.")
+                    
                     else:
                         while True:
                             # If we've reached the position:
@@ -618,13 +643,13 @@ while True:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion                  \n")
                 insert_choice = insertion_circular()
 
-                #insertion at the beginning (singly-circular)
+                # Insertion at the beginning (singly-circular)
                 if insert_choice == 1:
                     print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion-Beginning                  \n")
                     newnode_value = int(input("Enter data of new node: "))
                     newnode = Node(newnode_value)
 
-                    #empty list
+                    # Empty list
                     if Head is None:
                         Head = newnode
                         newnode.next = Head     # Points to itself
@@ -640,7 +665,7 @@ while True:
 
                     print("Node inserted at the beginning! :)")
                 
-                #insertion at specified position (singly-circular)
+                # Insertion at specified position (singly-circular)
                 elif insert_choice == 2:
                     print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion-Specified Position                  \n")
                     newnode_value = int(input("Enter data of new node: "))
@@ -655,7 +680,7 @@ while True:
                         except ValueError:
                             print("\nInvalid input. Please try again.\n") 
                     
-                    if insert_pos == 1:     #same as insertion at the beginning
+                    if insert_pos == 1:     # Same as insertion at the beginning
                         if Head is None:
                             Head = newnode
                             newnode.next = Head     # Points to itself
@@ -671,7 +696,7 @@ while True:
                             
                         print("Node inserted at position 1! :)")
 
-                    if insert_pos > 1:    # insertion at positions other than 1
+                    if insert_pos > 1:    # Insertion at positions other than 1
                         if Head is None:
                             print("The list is empty.")
 
@@ -681,7 +706,7 @@ while True:
                             curr_pos = 1        #Head's position is 1
 
                             while True:
-                                #Stop traversing before the position
+                                # Stop traversing before the position
                                 if curr_pos == insert_pos:
                                     break
 
@@ -689,22 +714,23 @@ while True:
                                 curr = curr.next
                                 curr_pos += 1
 
-                                #looped back to head → position doesn't exist
+                                # Looped back to head → position doesn't exist
                                 if curr == Head:
                                     print(f"{retri_pos} is out of range.")
                                     break
 
-                            prev.next = newnode     #node prior to the position
-                            newnode.next = curr     #point new node to the node on target position
+                            prev.next = newnode     # node prior to the position
+                            newnode.next = curr     # point new node to the node on target position
                             
                             print(f"Node inserted at position {insert_pos}!")
 
+                # Insertion at the end (singly-circular)
                 elif insert_choice == 3:
                     print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion-End                  \n")
                     newnode_value = int(input("Enter data of new node: "))
                     newnode = Node(newnode_value)
 
-                    #empty list
+                    # empty list
                     if Head is None:
                         Head = newnode
                         newnode.next = Head     # Points to itself
@@ -723,20 +749,20 @@ while True:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Deletion                  \n")
                 delete_choice = deletion()
 
-                #deleting at the beginning (singly)
+                # deleting at the beginning (singly-circular)
                 if delete_choice == 1:
-                    print(f"\n                  SINGLY-Circular LINKED LIST: Deletion-Beginning     \n")
+                    print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Deletion-Beginning     \n")
                     
                     #empty list
                     if Head is None:
                         print("The list is empty. There is nothing to delete.\n")
                     
                     #One node only
-                    elif Head.next == Head:     #Head pointing to it self (circular)
+                    elif Head.next == Head:     # Head pointing to it self (circular)
                         Head = None
                         print("Successfully deleted the head of the list!\n")
                     
-                    #More than one node
+                    # More than one node
                     else:
                         temp_var = None
                         last = Head
@@ -750,7 +776,7 @@ while True:
                         print("Successfully deleted the head of the list!\n")
                 
                 elif delete_choice == 2:
-                    print(f"\n                  SINGLY-Circular LINKED LIST: Deletion-Specified Position     \n")
+                    print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Deletion-Specified Position     \n")
                     while True:    
                         try:
                             delete_pos = int(input("Enter position of the node to be deleted: "))
@@ -811,7 +837,7 @@ while True:
                                 print(f"Successfully deleted position {delete_pos}!\n")
                 
                 elif delete_choice == 3:
-                    print(f"\n                  SINGLY-Circular LINKED LIST: Deletion-End     \n")
+                    print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Deletion-End     \n")
                     
                     #empty list
                     if Head is None:
@@ -856,7 +882,31 @@ while True:
                     
                     print(f"Length: {count}.\n")
 
+            # Sorting operation (Singly-circular)
             elif user_operation == 6:
+                print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Sort                  \n")
+                sort_choice = sorting_operation()
+
+                if sort_choice == 1:
+                    print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Sort (Lowest - Highest)                  \n")
+                    Head = selection_sort_SC(Head, ascending = True)
+                    print(f"Successfully sorted the list: LOWEST to HIGHEST")
+                    
+                    print("\n-----Current List:-----\n")
+                    traversal_SinglyCircular(Head)
+                    print("\n-----------------------")
+                
+                elif sort_choice == 2:
+                    print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Sort (Highest - Lowest)                  \n")
+                    Head = selection_sort_SC(Head, ascending = False)
+                    print(f"Successfully sorted the list: HIGHEST to LOWEST")
+                    
+                    print("\n-----Current List:-----\n")
+                    traversal_SinglyCircular(Head)
+                    print("\n-----------------------")
+
+            # Returns user to Main Menu
+            elif user_operation == 7:
                 break
 
     elif user_choice == 3:
@@ -1129,6 +1179,29 @@ while True:
 
             # Returns user to Main Menu
             elif user_operation == 6:
+                print(f"\n                  DOUBLY LINKED LIST: Sort                  \n")
+                sort_choice = sorting_operation()
+
+                if sort_choice == 1:
+                    print(f"\n                  DOUBLY LINKED LIST: Sort (Lowest - Highest)                  \n")
+                    Head = selection_sort_D(Head, ascending = True)
+                    print(f"Successfully sorted the list: LOWEST to HIGHEST")
+                    
+                    print("\n-----Current List:-----\n")
+                    traversal_Doubly(Head)
+                    print("\n-----------------------")
+                
+                elif sort_choice == 2:
+                    print(f"\n                  DOUBLY LINKED LIST: Sort (Highest - Lowest)                  \n")
+                    Head = selection_sort_D(Head, ascending = False)
+                    print(f"Successfully sorted the list: HIGHEST to LOWEST")
+                    
+                    print("\n-----Current List:-----\n")
+                    traversal_Doubly(Head)
+                    print("\n-----------------------")
+
+            # Returns user to Main Menu
+            elif user_operation == 7:
                 break
 
     elif user_choice == 4:
@@ -1489,11 +1562,31 @@ while True:
             
             elif user_operation == 6:
                 print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Sort                  \n")
-            
+                sort_choice = sorting_operation()
+
+                if sort_choice == 1:
+                    print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Sort (Lowest - Highest)                  \n")
+                    Head = selection_sort_DC(Head, ascending = True)
+                    print(f"Successfully sorted the list: LOWEST to HIGHEST")
+                    
+                    print("\n-----Current List:-----\n")
+                    traversal_DoublyCircular(Head)
+                    print("\n-----------------------")
+                
+                elif sort_choice == 2:
+                    print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Sort (Highest - Lowest)                  \n")
+                    Head = selection_sort_DC(Head, ascending = False)
+                    print(f"Successfully sorted the list: HIGHEST to LOWEST")
+                    
+                    print("\n-----Current List:-----\n")
+                    traversal_DoublyCircular(Head)
+                    print("\n-----------------------")
+
+            # Returns user to Main Menu
             elif user_operation == 7:
                 break
 
-
+    # Exits the Main Menu
     elif user_choice == 5:
         break
 
