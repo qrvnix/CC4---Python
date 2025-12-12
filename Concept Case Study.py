@@ -24,9 +24,9 @@ def choose():
 def choose_operation():
     while True:
         try:
-            print(f"\nSelect what operation to do: \n 1 - Traversal (Print all your data)\n 2 - Retrieval\n 3 - Insertion\n 4 - Deletion\n 5 - Length\n 6 - Back to main menu")
-            choice = int(input(f"Enter your choice (1-6): "))
-            if choice in range(1, 7):
+            print(f"\nSelect what operation to do: \n 1 - Traversal (Print all your data)\n 2 - Retrieval\n 3 - Insertion\n 4 - Deletion\n 5 - Length\n 6 - Sort\n 7 - Back to main menu")
+            choice = int(input(f"Enter your choice (1-7): "))
+            if choice in range(1, 8):
                 return choice
             else:
                 raise ValueError
@@ -709,7 +709,7 @@ while True:
 
                 # Empty list
                 if Head is None:
-                    print("The list is empty. There is nothing to delete.\n")
+                    print("The list is empty!\n")
 
                 else:
                     count = 1
@@ -1022,12 +1022,12 @@ while True:
         current.next = Head
         Head.prev = current
 
-        #print the created list
+        # Print the created list
         print("\n-----Current List:-----\n")
         traversal_DoublyCircular(Head)
         print("\n-----------------------")
 
-        #Menu of operations under singly-circular
+        # Menu of operations under doubly-circular
         while True:
             user_operation = choose_operation()
             if user_operation == 1:
@@ -1036,21 +1036,327 @@ while True:
             
             elif user_operation == 2:
                 print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Retrieval                  \n")
+                retri_choice = for_retrieval()
+
+                # Checking if a value exists
+                if retri_choice == 1:       
+                    user_value = int(input("\nEnter value to check: "))
+                    found = False
+                    
+                    curr = Head
+
+                    if curr is None:
+                        print("The list is empty.")
+                    
+                    else:
+                        while True:
+                            if curr.data == user_value:
+                                print(f"{user_value} exists in the linked list!")
+                                found = True
+                                break
+
+                            curr = curr.next
+
+                            # Stop when we return to head
+                            if curr == Head:
+                                break
+
+                        if not found:
+                            print(f"{user_value} doesn't exist in the linked list. :(")
+                
+                elif retri_choice == 2:
+                    while True:
+                        try:
+                            retri_pos = int(input("\nEnter position to retrieve: "))
+                            if retri_pos <= 0:
+                                raise ValueError
+                            break
+                        except ValueError:
+                            print("Invalid input. Please try again.")
+
+                    curr = Head
+                    curr_pos = 1        #Head's position is 1
+
+                    if curr is None:
+                        print("The list is empty.")
+                        continue
+
+                    else:
+                        while True:
+                            # If we've reached the position:
+                            if curr_pos == retri_pos:
+                                print(f"Position {retri_pos} has a data of {curr.data}")
+                                break
+
+                            curr = curr.next
+                            curr_pos += 1
+
+                            # We've looped back to head → position doesn't exist
+                            if curr == Head:
+                                print(f"{retri_pos} is out of range.")
+                                break
 
             elif user_operation == 3:
                 print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Insertion                  \n")
+                insert_choice = insertion_doubly()
+                
+                # Insertion at the beginning (doubly-circular)
+                if insert_choice == 1:
+                    print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Insertion-Beginning                  \n")
+                    newnode_value = int(input("Enter data of new node: "))
+                    newnode = Doubly_Node(newnode_value)
+
+                    # Checks if user has an empty list
+                    if Head is None:
+                        Head = newnode
+                        newnode.next = Head     # Points to itself
+                        newnode.prev = Head
+
+                    else:
+                        last = Head             # Find last node
+                        while last.next != Head:
+                            last = last.next
+
+                        newnode.next = Head     # Ajust pointers
+                        newnode.prev = last
+                        Head.prev = newnode
+                        last.next = newnode     # Make last node point to new head
+                        Head = newnode          # Update head
+
+                    print("Node inserted at the beginning! :)")
+
+                # Insertion at specified position (doubly-circular)
+                elif insert_choice == 2:
+                    print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Insertion-Specific Position                  \n")
+                    newnode_value = int(input("Enter data of new node: "))
+                    newnode = Doubly_Node(newnode_value)
+                    
+                    while True:
+                        try:
+                            insert_pos = int(input("Enter position to insert a node: "))
+                            if insert_pos < 1:
+                                raise ValueError
+                        
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+
+                        else:
+                            if insert_pos == 1:
+                                
+                                # Checks if user has an empty list
+                                if Head is None:
+                                    Head = newnode
+                                    newnode.next = Head     # Points to itself
+                                    newnode.prev = Head
+                                
+                                else:
+                                    last = Head             # Find last node
+                                    while last.next != Head:
+                                        last = last.next
+
+                                    newnode.next = Head     # Adjust pointers
+                                    newnode.prev = last
+                                    Head.prev = newnode
+                                    last.next = newnode     # Make last node point to new head
+                                    Head = newnode          # Update head
+                                
+                                print("Node inserted at position 1! :)")
+                            
+                            else:       # Insert at position > 1
+                                
+                                # Checks if user has an empty list
+                                if Head is None:
+                                    print("The list is empty.")
+                                    continue    # Skip the rest
+
+                                
+                                curr = Head
+                                curr_pos = 1        #Head's position is 1
+
+                                while curr_pos < insert_pos - 1:
+                                    curr = curr.next
+                                    curr_pos += 1
+
+                                    # If we looped back to head → position doesn't exist
+                                    if curr == Head:
+                                        print(f"{insert_pos} is out of range.")
+                                        continue        # Skip the rest
+                                
+                                # Insert newnode after curr
+                                newnode.next = curr.next        # Adjust pointers
+                                newnode.prev = curr
+                                curr.next.prev = newnode
+                                curr.next = newnode
+
+                                print(f"Node inserted at position {insert_pos}!")
+
+                elif insert_choice == 3:
+                    print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Insertion-End                  \n")
+                    newnode_value = int(input("Enter data of new node: "))
+                    newnode = Doubly_Node(newnode_value)
+
+                    # Checks if user has an empty list
+                    if Head is None:
+                        Head = newnode
+                        newnode.next = Head     # Points to itself
+                        newnode.prev = Head
+
+                    else:
+                        last = Head             # Find last node
+                        while last.next != Head:
+                            last = last.next
+
+                        newnode.next = Head     # Ajust pointers
+                        newnode.prev = last
+                        last.next = newnode     # Make last node point to new head
+                        Head.prev = newnode
+
+                    print("Node inserted at the end! :)")
 
             elif user_operation == 4:
                 print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Deletion                  \n")
-            
+                delete_choice = deletion()
+                
+                # Deletion at the beginning (Doubly-circular)
+                if delete_choice == 1:
+                    print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Deletion-Beginning                  \n")
+
+                    # Empty list
+                    if Head is None:
+                        print("The list is empty. There is nothing to delete.\n")
+                    
+                    # One node only
+                    elif Head.next == Head:     #Head pointing to it self (circular)
+                        Head = None
+                        print("Successfully deleted the head of the list!\n")
+                    
+                    # More than one node
+                    else:
+                        last = Head
+                        while last.next != Head:
+                            last = last.next
+
+                        last.next = Head.next       # Tail points to the node next to head
+                        Head.next.prev = last
+                        Head = Head.next            # Adjust the head
+
+                        print("Successfully deleted the head of the list!\n")
+
+
+
+                # Deletion at specified position (Doubly-circular)
+                elif delete_choice == 2:
+                    print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Deletion-Specific Position                  \n")
+                    while True:    
+                        try:
+                            delete_pos = int(input("Enter position of the node to be deleted: "))
+                            if delete_pos <= 0:
+                                raise ValueError
+                        
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+                        
+                        else:
+                            if Head is None:
+                                print("The list is empty. There is nothing to delete.\n")
+                            
+                            else:
+                                if delete_pos == 1:
+                                    
+                                    # One node only
+                                    if Head.next == Head:     #Head pointing to it self (circular)
+                                        Head = None
+                                        print("Successfully deleted the head of the list!\n")
+                                    
+                                    # More than one node
+                                    else:
+                                        last = Head
+                                        while last.next != Head:
+                                            last = last.next
+
+                                        last.next = Head.next       # Tail points to the node next to head
+                                        Head.next.prev = last
+                                        Head = Head.next            # Adjust the head
+
+                                        print("Successfully deleted position 1!\n")
+                                
+                                else:
+                                    curr = Head         # Current node during traversal
+                                    curr_pos = 1
+
+                                    while curr_pos == delete_pos - 1:       # Stop at node before the target position
+                                        curr = curr.next
+                                        curr_pos += 1
+
+                                        #looped back to head → position doesn't exist
+                                        if curr.next == Head:
+                                            print(f"{delete_pos} is out of range.")
+                                            break 
+                                        
+                                    else:
+                                        node_to_delete = curr.next      # This only runs if no breaks happened
+
+                                        # If deleting the last node
+                                        if node_to_delete.next == Head:
+                                            curr.next = Head
+                                            Head.prev = curr
+
+                                        else:
+                                            curr.next = node_to_delete.next      # Adjust pointers
+                                            node_to_delete.next.next.prev = curr
+                                            
+                                            print(f"Successfully deleted position {delete_pos}!\n")
+
+                # Deletion at the end (Doubly-circular)
+                elif delete_choice == 3:
+                    print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Deletion-End                  \n")
+
+                    # Checks if list is empty
+                    if Head is None:
+                        print("The list is empty. There is nothing to delete.\n")
+
+                    # One node only
+                    elif Head.next == Head:     #Head pointing to it self (circular)
+                        Head = None
+                        print("Successfully deleted the head of the list!\n")
+                    
+                    # More than one node
+                    else:
+                        last = Head
+                        while last.next != Head:
+                            last = last.next
+
+                        last.prev.next = Head       # Adjust pointers
+                        Head.prev = last.prev
+                        last = None
+
+                        print("Successfully deleted the tail of the list!\n")
+
             elif user_operation == 5:
                 print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Length                  \n")
+                
+                # Empty list
+                if Head is None:
+                    print("The list is empty!\n")
+
+                else:
+                    count = 0
+                    curr = Head
+
+                    while True:        # Traverse until the current node points to the head
+                        count += 1
+                        curr = curr.next
+                        if curr == Head:  # Stop after completing full circle
+                            break
+                    
+                    print(f"Length: {count}.\n")
+
             
             elif user_operation == 6:
                 print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Sort                  \n")
             
             elif user_operation == 7:
-                print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Retrieval                  \n")
+                break
 
 
     elif user_choice == 5:
