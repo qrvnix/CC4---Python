@@ -279,7 +279,12 @@ while True:
         print(f"\n                  SINGLY LINKED LIST                  \n")
         print(f"_______________Let's create your list first!______________")
 
-        list_size = int(input("Enter list length: "))
+        while True:
+            try:
+                list_size = int(input("Enter list length: "))
+                break
+            except ValueError:
+                print("\nInvalid input. Please try again.\n")
 
         #creates the head
         Head_data = int(input("\nEnter head's data: "))
@@ -313,7 +318,12 @@ while True:
 
                 #checks if a particular value exists
                 if retri_choice == 1:
-                    user_value = int(input("\nEnter value to check: "))
+                    while True:
+                        try:
+                            user_value = int(input("\nEnter value to check: "))
+                            break
+                        except ValueError:
+                            print("Invalid input. Please try again.")
                     
                     found = False
                     curr = Head
@@ -360,21 +370,36 @@ while True:
                 #inserting at beginning (singly)
                 if insert_choice == 1:
                     print(f"\n                  SINGLY LINKED LIST: Insertion-Beginning      \n")
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:
+                        try:
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+                    
                     newnode = Node(newnode_value)
                     newnode.next = Head
                     Head = newnode
+
+                    print(f"{newnode_value} was successfully inserted!")
                 
                 #inserting at the middle-before a node (singly)
                 elif insert_choice == 2:
                     print(f"\n                  SINGLY LINKED LIST: Insertion-Middle (Before)     \n")
-                    target_value = int(input("Enter data of the node BEFORE which to insert: "))
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:    
+                        try:
+                            target_value = int(input("Enter data of the node BEFORE which to insert: "))
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+
                     newnode = Node(newnode_value)
 
                     if Head.data == target_value:
                         newnode.next = Head
                         Head = newnode
+                        print(f"{newnode_value} was successfully inserted!")
 
                     else:
                         prev = None
@@ -387,12 +412,19 @@ while True:
                         else:
                             prev.next = newnode
                             newnode.next = curr
+                            print(f"{newnode_value} was successfully inserted!")
                 
                 #inserting at the middle-after a node (singly)
                 elif insert_choice == 3:
                     print(f"\n                  SINGLY LINKED LIST: Insertion-Middle (After)     \n")
-                    target_value = int(input("Enter data of the node AFTER which to insert: "))
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:    
+                        try:    
+                            target_value = int(input("Enter data of the node AFTER which to insert: "))
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+                    
                     newnode = Node(newnode_value)
 
                     #traverse to find the target
@@ -406,11 +438,18 @@ while True:
                         #adjust pointers
                         newnode.next = curr.next
                         curr.next = newnode
+                        print(f"{newnode_value} was successfully inserted!")
                 
                 #inserting at the end (singly)
                 elif insert_choice == 4:
                     print(f"\n                  SINGLY LINKED LIST: Insertion-End     \n")
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:
+                        try:
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+                    
                     newnode = Node(newnode_value)
 
                     #traverse to find tail
@@ -420,6 +459,7 @@ while True:
 
                     #adjust pointers
                     curr.next = newnode
+                    print(f"{newnode_value} was successfully inserted!")
 
             #deletion operation (singly)
             elif user_operation == 4:
@@ -535,7 +575,7 @@ while True:
                 elif sort_choice == 2:
                     print(f"\n                  SINGLY LINKED LIST: Sort (Highest - Lowest)                  \n")
                     Head = selection_sort_S(Head, ascending = False)
-                    print(f"Successfully sorted the list: LOWEST to HIGHEST")
+                    print(f"Successfully sorted the list: HIGHEST to LOWEST")
                     
                     print("\n-----Current List:-----\n")
                     traversal(Head)
@@ -550,7 +590,12 @@ while True:
         print(f"_______________Let's create your list first!______________")
 
         # Determine the size
-        list_size = int(input("Enter list length: "))
+        while True:
+            try:
+                list_size = int(input("Enter list length: "))
+                break
+            except ValueError:
+                print("\nInvalid input. Please try again.\n")
 
         # Create the circular list
         Head_data = int(input("\nEnter head's data: "))
@@ -584,7 +629,13 @@ while True:
                 print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Retrieval                  \n")
                 retri_choice = for_retrieval()
                 if retri_choice == 1:       #checking if a value exists
-                    user_value = int(input("\nEnter value to check: "))
+                    while True:    
+                        try:
+                            user_value = int(input("\nEnter value to check: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+
                     found = False
                     curr = Head
 
@@ -614,7 +665,6 @@ while True:
                             if retri_pos <= 0:
                                 raise ValueError
                             break
-                        
                         except ValueError:
                             print("Invalid input. Please try again.")
 
@@ -646,7 +696,13 @@ while True:
                 # Insertion at the beginning (singly-circular)
                 if insert_choice == 1:
                     print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion-Beginning                  \n")
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:
+                        try:
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+                    
                     newnode = Node(newnode_value)
 
                     # Empty list
@@ -668,7 +724,13 @@ while True:
                 # Insertion at specified position (singly-circular)
                 elif insert_choice == 2:
                     print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion-Specified Position                  \n")
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:
+                        try:
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+
                     newnode = Node(newnode_value)
 
                     while True:
@@ -696,7 +758,7 @@ while True:
                             
                         print("Node inserted at position 1! :)")
 
-                    if insert_pos > 1:    # Insertion at positions other than 1
+                    elif insert_pos > 1:    # Insertion at positions other than 1
                         if Head is None:
                             print("The list is empty.")
 
@@ -716,7 +778,7 @@ while True:
 
                                 # Looped back to head → position doesn't exist
                                 if curr == Head:
-                                    print(f"{retri_pos} is out of range.")
+                                    print(f"{insert_pos} is out of range.")
                                     break
 
                             prev.next = newnode     # node prior to the position
@@ -727,13 +789,20 @@ while True:
                 # Insertion at the end (singly-circular)
                 elif insert_choice == 3:
                     print(f"\n                  SINGLY-CIRCULAR LINKED LIST: Insertion-End                  \n")
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:
+                        try:
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+                    
                     newnode = Node(newnode_value)
 
                     # empty list
                     if Head is None:
                         Head = newnode
                         newnode.next = Head     # Points to itself
+                        print("Node inserted at the end! :)")
 
                     else:
                         last = Head             # Find last node
@@ -913,7 +982,12 @@ while True:
         print(f"\n                  DOUBLY LINKED LIST                  \n")
         print(f"_______________Let's create your list first!______________")
 
-        list_size = int(input("Enter list length: "))
+        while True:
+            try:
+                list_size = int(input("Enter list length: "))
+                break
+            except ValueError:
+                print("\nInvalid input. Please try again.\n")
 
         #creates the head
         Head_data = int(input("\nEnter head's data: "))
@@ -947,15 +1021,23 @@ while True:
                 
                     #checks if a particular value exists
                 if retri_choice == 1:
-                    user_value = int(input("\nEnter value to check: "))
+                    while True:    
+                        try:
+                            user_value = int(input("\nEnter value to check: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+
                     found = False
                     curr = Head
+
                     while curr is not None:
                         if curr.data == user_value:
                             print(f"{user_value} exists in the linked list!")
                             found = True
                             break
                         curr = curr.next
+
                     if not found:
                         print(f"{user_value} doesn't exist in the linked list. :(")
 
@@ -966,13 +1048,14 @@ while True:
                             retri_pos = int(input("\nEnter position to retrieve: "))
                             if retri_pos <= 0:
                                 raise ValueError
-                                continue
                             break
+
                         except ValueError:
-                            print("Invalid input. Please try again.")
+                            print("\nInvalid input. Please try again.\n")
 
                     curr_pos = 0
                     curr = Head
+
                     while curr is not None:
                         curr_pos += 1
                         if curr_pos == retri_pos:
@@ -990,7 +1073,13 @@ while True:
                 #inserting at beginning (singly)
                 if insert_choice == 1:
                     print(f"\n                  DOUBLY LINKED LIST: Insertion-Beginning      \n")
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:
+                        try:
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+
                     newnode = Doubly_Node(newnode_value)
 
                     if Head is not None:        # This makes sure that the previous pointer is only set if list is not empty
@@ -1001,7 +1090,13 @@ while True:
                 
                 elif insert_choice == 2:
                     print(f"\n                  DOUBLY LINKED LIST: Insertion-Specific Position      \n")
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:
+                        try:
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n") 
+
                     newnode = Doubly_Node(newnode_value)
 
                     while True:
@@ -1046,25 +1141,25 @@ while True:
                 # Insertion at the end (doubly)
                 elif insert_choice == 3:
                     print(f"\n                  DOUBLY LINKED LIST: Insertion-End      \n")
-                    try:
-                        newnode_value = int(input("Enter data of new node: "))
+                    while True:   
+                        try:
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
 
-                    except ValueError:
-                        print("\nInvalid input. Please try again.\n")
-                    
-                    else:
-                        newnode = Doubly_Node(newnode_value)
+                    newnode = Doubly_Node(newnode_value)
 
-                        # Traverse to find tail
-                        curr = Head
-                        while curr.next is not None:
-                            curr = curr.next
+                    # Traverse to find tail
+                    curr = Head
+                    while curr.next is not None:
+                        curr = curr.next
 
-                        # Adjust pointers
-                        curr.next = newnode
-                        newnode.prev = curr
+                    # Adjust pointers
+                    curr.next = newnode
+                    newnode.prev = curr
 
-                        print(f"Successfully inserted {newnode.data}! :)")
+                    print(f"Successfully inserted {newnode.data}! :)")
 
             elif user_operation == 4:
                 print(f"\n                  DOUBLY LINKED LIST: Deletion      \n")
@@ -1092,35 +1187,34 @@ while True:
                 # Deletion at specified position (Doubly)
                 elif delete_choice == 2:
                     print(f"\n                  DOUBLY LINKED LIST: Deletion-Specific Position      \n")
-
-                    try:
-                        delete_pos = int(input("Enter position of the node to be deleted: "))
-                        if delete_pos <= 0:
-                            raise ValueError
-
-                    except ValueError:
-                        print("\nInvalid input. Please try again.\n")
+                    while True:
+                        try:
+                            delete_pos = int(input("Enter position of the node to be deleted: "))
+                            if delete_pos <= 0:
+                                raise ValueError
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
                     
-                    else:
-                        if Head is None:        # Empty list
-                            print("List is empty!\n")
-                            continue
+                    if Head is None:        # Empty list
+                        print("List is empty!\n")
+                    
+                    elif delete_pos == 1:
+                        temp_var = Head     # Save to temporary variable
+
+                        if Head.next is None:       # Only one node
+                            Head = None
                         
-                        if delete_pos == 1:
-                            temp_var = Head     # Save to temporary variable
+                        else:
+                            Head = Head.next    # Adjust pointer
+                            Head.prev = None
+                        
+                        temp_var = None     # Delete temporary variable
 
-                            if Head.next is None:       # Only one node
-                                Head = None
-                            
-                            else:
-                                Head = Head.next    # Adjust pointer
-                                Head.prev = None
-                            
-                            temp_var = None     # Delete temporary variable
+                        print(f"Successfully deleted position {delete_pos}!\n")
+                        continue
 
-                            print(f"Successfully deleted position {delete_pos}!\n")
-                            continue
-
+                    else:
                         curr = Head
                         count_pos = 1
 
@@ -1209,7 +1303,12 @@ while True:
         print(f"_______________Let's create your list first!______________")
         
         #determine the size
-        list_size = int(input("Enter list length: "))
+        while True:
+            try:
+                list_size = int(input("Enter list length: "))
+                break
+            except ValueError:
+                print("\nInvalid input. Please try again.\n")
 
         #create the circular list
         Head_data = int(input("\nEnter head's data: "))
@@ -1247,10 +1346,15 @@ while True:
                 retri_choice = for_retrieval()
 
                 # Checking if a value exists
-                if retri_choice == 1:       
-                    user_value = int(input("\nEnter value to check: "))
-                    found = False
-                    
+                if retri_choice == 1:  
+                    while True:     
+                        try:
+                            user_value = int(input("\nEnter value to check: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+
+                    found = False                    
                     curr = Head
 
                     if curr is None:
@@ -1280,7 +1384,7 @@ while True:
                                 raise ValueError
                             break
                         except ValueError:
-                            print("Invalid input. Please try again.")
+                            print("\nInvalid input. Please try again.\n")
 
                     curr = Head
                     curr_pos = 1        #Head's position is 1
@@ -1311,7 +1415,13 @@ while True:
                 # Insertion at the beginning (doubly-circular)
                 if insert_choice == 1:
                     print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Insertion-Beginning                  \n")
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:    
+                        try:    
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+
                     newnode = Doubly_Node(newnode_value)
 
                     # Checks if user has an empty list
@@ -1336,7 +1446,13 @@ while True:
                 # Insertion at specified position (doubly-circular)
                 elif insert_choice == 2:
                     print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Insertion-Specific Position                  \n")
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:
+                        try:
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+                    
                     newnode = Doubly_Node(newnode_value)
                     
                     while True:
@@ -1344,63 +1460,67 @@ while True:
                             insert_pos = int(input("Enter position to insert a node: "))
                             if insert_pos < 1:
                                 raise ValueError
-                        
+                            break
                         except ValueError:
                             print("\nInvalid input. Please try again.\n")
 
+                    if insert_pos == 1:
+                        
+                        # Checks if user has an empty list
+                        if Head is None:
+                            Head = newnode
+                            newnode.next = Head     # Points to itself
+                            newnode.prev = Head
+                        
                         else:
-                            if insert_pos == 1:
-                                
-                                # Checks if user has an empty list
-                                if Head is None:
-                                    Head = newnode
-                                    newnode.next = Head     # Points to itself
-                                    newnode.prev = Head
-                                
-                                else:
-                                    last = Head             # Find last node
-                                    while last.next != Head:
-                                        last = last.next
+                            last = Head             # Find last node
+                            while last.next != Head:
+                                last = last.next
 
-                                    newnode.next = Head     # Adjust pointers
-                                    newnode.prev = last
-                                    Head.prev = newnode
-                                    last.next = newnode     # Make last node point to new head
-                                    Head = newnode          # Update head
-                                
-                                print("Node inserted at position 1! :)")
+                            newnode.next = Head     # Adjust pointers
+                            newnode.prev = last
+                            Head.prev = newnode
+                            last.next = newnode     # Make last node point to new head
+                            Head = newnode          # Update head
+                        
+                        print("Node inserted at position 1! :)")
+                    
+                    else:       # Insert at position > 1
+                        
+                        # Checks if user has an empty list
+                        if Head is None:
+                            print("The list is empty.")
+
+                        else:
+                            curr = Head
+                            curr_pos = 1        #Head's position is 1
+
+                            while curr_pos < insert_pos - 1:
+                                curr = curr.next
+                                curr_pos += 1
+
+                                # If we looped back to head → position doesn't exist
+                                if curr == Head:
+                                    print(f"{insert_pos} is out of range.")
+                                    break
                             
-                            else:       # Insert at position > 1
-                                
-                                # Checks if user has an empty list
-                                if Head is None:
-                                    print("The list is empty.")
-                                    continue    # Skip the rest
+                            # Insert newnode after curr
+                            newnode.next = curr.next        # Adjust pointers
+                            newnode.prev = curr
+                            curr.next.prev = newnode
+                            curr.next = newnode
 
-                                
-                                curr = Head
-                                curr_pos = 1        #Head's position is 1
-
-                                while curr_pos < insert_pos - 1:
-                                    curr = curr.next
-                                    curr_pos += 1
-
-                                    # If we looped back to head → position doesn't exist
-                                    if curr == Head:
-                                        print(f"{insert_pos} is out of range.")
-                                        continue        # Skip the rest
-                                
-                                # Insert newnode after curr
-                                newnode.next = curr.next        # Adjust pointers
-                                newnode.prev = curr
-                                curr.next.prev = newnode
-                                curr.next = newnode
-
-                                print(f"Node inserted at position {insert_pos}!")
+                            print(f"Node inserted at position {insert_pos}!")
 
                 elif insert_choice == 3:
                     print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Insertion-End                  \n")
-                    newnode_value = int(input("Enter data of new node: "))
+                    while True:
+                        try:
+                            newnode_value = int(input("Enter data of new node: "))
+                            break
+                        except ValueError:
+                            print("\nInvalid input. Please try again.\n")
+                    
                     newnode = Doubly_Node(newnode_value)
 
                     # Checks if user has an empty list
@@ -1450,8 +1570,6 @@ while True:
 
                         print("Successfully deleted the head of the list!\n")
 
-
-
                 # Deletion at specified position (Doubly-circular)
                 elif delete_choice == 2:
                     print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Deletion-Specific Position                  \n")
@@ -1460,60 +1578,58 @@ while True:
                             delete_pos = int(input("Enter position of the node to be deleted: "))
                             if delete_pos <= 0:
                                 raise ValueError
-                        
+                            break                       
                         except ValueError:
                             print("\nInvalid input. Please try again.\n")
                         
-                        else:
-                            if Head is None:
-                                print("The list is empty. There is nothing to delete.\n")
+                    if Head is None:
+                        print("The list is empty. There is nothing to delete.\n")
+                    
+                    else:
+                        if delete_pos == 1:
+                            # One node only
+                            if Head.next == Head:     #Head pointing to it self (circular)
+                                Head = None
+                                print("Successfully deleted the head of the list!\n")
                             
+                            # More than one node
                             else:
-                                if delete_pos == 1:
-                                    
-                                    # One node only
-                                    if Head.next == Head:     #Head pointing to it self (circular)
-                                        Head = None
-                                        print("Successfully deleted the head of the list!\n")
-                                    
-                                    # More than one node
-                                    else:
-                                        last = Head
-                                        while last.next != Head:
-                                            last = last.next
+                                last = Head
+                                while last.next != Head:
+                                    last = last.next
 
-                                        last.next = Head.next       # Tail points to the node next to head
-                                        Head.next.prev = last
-                                        Head = Head.next            # Adjust the head
+                                last.next = Head.next       # Tail points to the node next to head
+                                Head.next.prev = last
+                                Head = Head.next            # Adjust the head
 
-                                        print("Successfully deleted position 1!\n")
+                                print("Successfully deleted position 1!\n")
+                        
+                        else:
+                            curr = Head         # Current node during traversal
+                            curr_pos = 1
+
+                            while curr_pos == delete_pos - 1:       # Stop at node before the target position
+                                curr = curr.next
+                                curr_pos += 1
+
+                                #looped back to head → position doesn't exist
+                                if curr.next == Head:
+                                    print(f"{delete_pos} is out of range.")
+                                    break 
                                 
+                            else:
+                                node_to_delete = curr.next      # This only runs if no breaks happened
+
+                                # If deleting the last node
+                                if node_to_delete.next == Head:
+                                    curr.next = Head
+                                    Head.prev = curr
+
                                 else:
-                                    curr = Head         # Current node during traversal
-                                    curr_pos = 1
-
-                                    while curr_pos == delete_pos - 1:       # Stop at node before the target position
-                                        curr = curr.next
-                                        curr_pos += 1
-
-                                        #looped back to head → position doesn't exist
-                                        if curr.next == Head:
-                                            print(f"{delete_pos} is out of range.")
-                                            break 
-                                        
-                                    else:
-                                        node_to_delete = curr.next      # This only runs if no breaks happened
-
-                                        # If deleting the last node
-                                        if node_to_delete.next == Head:
-                                            curr.next = Head
-                                            Head.prev = curr
-
-                                        else:
-                                            curr.next = node_to_delete.next      # Adjust pointers
-                                            node_to_delete.next.next.prev = curr
-                                            
-                                            print(f"Successfully deleted position {delete_pos}!\n")
+                                    curr.next = node_to_delete.next      # Adjust pointers
+                                    node_to_delete.next.next.prev = curr
+                                    
+                                    print(f"Successfully deleted position {delete_pos}!\n")
 
                 # Deletion at the end (Doubly-circular)
                 elif delete_choice == 3:
@@ -1558,7 +1674,6 @@ while True:
                             break
                     
                     print(f"Length: {count}.\n")
-
             
             elif user_operation == 6:
                 print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Sort                  \n")
