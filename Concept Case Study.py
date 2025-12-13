@@ -758,7 +758,7 @@ while True:
                             
                         print("Node inserted at position 1! :)")
 
-                    elif insert_pos > 1:    # Insertion at positions other than 1
+                    else:    # Insertion at positions other than 1
                         if Head is None:
                             print("The list is empty.")
 
@@ -767,24 +767,18 @@ while True:
                             prev = None
                             curr_pos = 1        #Head's position is 1
 
-                            while True:
-                                # Stop traversing before the position
-                                if curr_pos == insert_pos:
-                                    break
-
-                                prev = curr
+                            while curr_pos < insert_pos - 1:
                                 curr = curr.next
                                 curr_pos += 1
 
-                                # Looped back to head → position doesn't exist
                                 if curr == Head:
                                     print(f"{insert_pos} is out of range.")
                                     break
-
-                            prev.next = newnode     # node prior to the position
-                            newnode.next = curr     # point new node to the node on target position
                             
-                            print(f"Node inserted at position {insert_pos}!")
+                            else:
+                                newnode.next = curr.next
+                                curr.next = newnode
+                                print(f"Node inserted at position {insert_pos}!")
 
                 # Insertion at the end (singly-circular)
                 elif insert_choice == 3:
@@ -1082,11 +1076,14 @@ while True:
 
                     newnode = Doubly_Node(newnode_value)
 
-                    if Head is not None:        # This makes sure that the previous pointer is only set if list is not empty
+                    newnode.prev = None          # Head has no previous node
+                    newnode.next = Head
+
+                    if Head is not None:
                         Head.prev = newnode
 
-                    newnode.next = Head
                     Head = newnode
+                    print("Node inserted at the head!")
                 
                 elif insert_choice == 2:
                     print(f"\n                  DOUBLY LINKED LIST: Insertion-Specific Position      \n")
@@ -1108,11 +1105,13 @@ while True:
                         except ValueError:
                             print("\nInvalid input. Please try again.\n") 
                     
-                    if insert_pos == 1:     # Insertion at the beginning
+                    if insert_pos == 1:
+                        newnode.next = Head
+                        newnode.prev = None
+
                         if Head is not None:
                             Head.prev = newnode
-                        newnode.next = Head     # Points to itself
-                        newnode.prev = None
+
                         Head = newnode
                         print("Node inserted at position 1!")
                     
@@ -1124,19 +1123,21 @@ while True:
                             curr_pos = 1
 
                             # Traverse to the node currently at insert_pos
-                            while curr is not None and curr_pos < insert_pos:
-                                prev = curr
+                            while curr is not None and curr_pos < insert_pos - 1:
                                 curr = curr.next
                                 curr_pos += 1
 
-                            # Insert newnode between prev and curr
-                            newnode.prev = prev
-                            newnode.next = curr
-                            prev.next = newnode
-                            if curr is not None:
-                                curr.prev = newnode
+                            if curr is None:
+                                print(f"{insert_pos} is out of range.")
+                            else:
+                                newnode.next = curr.next
+                                newnode.prev = curr
 
-                            print(f"Node inserted at position {insert_pos}!")
+                                if curr.next is not None:
+                                    curr.next.prev = newnode
+
+                                curr.next = newnode
+                                print(f"Node inserted at position {insert_pos}!")
 
                 # Insertion at the end (doubly)
                 elif insert_choice == 3:
@@ -1504,13 +1505,14 @@ while True:
                                     print(f"{insert_pos} is out of range.")
                                     break
                             
-                            # Insert newnode after curr
-                            newnode.next = curr.next        # Adjust pointers
-                            newnode.prev = curr
-                            curr.next.prev = newnode
-                            curr.next = newnode
+                            else:
+                                # Insert newnode after curr
+                                newnode.next = curr.next        # Adjust pointers
+                                newnode.prev = curr
+                                curr.next.prev = newnode
+                                curr.next = newnode
 
-                            print(f"Node inserted at position {insert_pos}!")
+                                print(f"Node inserted at position {insert_pos}!")
 
                 elif insert_choice == 3:
                     print(f"\n                  DOUBLY-CIRCULAR LINKED LIST: Insertion-End                  \n")
@@ -1605,31 +1607,28 @@ while True:
                                 print("Successfully deleted position 1!\n")
                         
                         else:
-                            curr = Head         # Current node during traversal
+                            curr = Head
                             curr_pos = 1
+                            out_of_range = False
 
-                            while curr_pos == delete_pos - 1:       # Stop at node before the target position
+                            while curr_pos < delete_pos - 1:       # Stop at node before the target position
                                 curr = curr.next
                                 curr_pos += 1
 
                                 #looped back to head → position doesn't exist
-                                if curr.next == Head:
-                                    print(f"{delete_pos} is out of range.")
-                                    break 
+                                if curr == Head:
+                                    out_of_range = True
+                                    break
                                 
+                            if out_of_range or curr.next == Head:
+                                print(f"{delete_pos} is out of range.")
+
                             else:
-                                node_to_delete = curr.next      # This only runs if no breaks happened
+                                node_to_delete = curr.next
+                                curr.next = node_to_delete.next
+                                node_to_delete.next.prev = curr
 
-                                # If deleting the last node
-                                if node_to_delete.next == Head:
-                                    curr.next = Head
-                                    Head.prev = curr
-
-                                else:
-                                    curr.next = node_to_delete.next      # Adjust pointers
-                                    node_to_delete.next.next.prev = curr
-                                    
-                                    print(f"Successfully deleted position {delete_pos}!\n")
+                                print(f"Successfully deleted position {delete_pos}!\n")
 
                 # Deletion at the end (Doubly-circular)
                 elif delete_choice == 3:
